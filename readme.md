@@ -4,7 +4,7 @@
 
 *A short description of the keyboard/project*
 
-* Keyboard Maintainer: [qqsplit_78](https://github.com/NPC_977)
+* Keyboard Maintainer: [qqsplit_78](https://github.com/NPC-977)
 * Hardware Supported: *The PCBs, controllers supported*
 * Hardware Availability: *Links to where you can find this hardware*
 

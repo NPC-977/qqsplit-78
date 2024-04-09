@@ -1,7 +1,7 @@
 {
     "manufacturer": "qqsplit_78",
     "keyboard_name": "qqsplit_78",
-    "maintainer": "NPC_977",
+    "maintainer": "NPC-977",
     "bootloader": "atmel-dfu",
     "diode_direction": "COL2ROW",
     "processor": "atmega32u4",

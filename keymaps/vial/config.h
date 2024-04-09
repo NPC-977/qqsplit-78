@@ -1,4 +1,4 @@
-// Copyright 2024 qqsplit_78 (@NPC_977)
+// Copyright 2024 qqsplit-78 (@NPC-977)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
