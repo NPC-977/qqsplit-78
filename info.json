@@ -50,6 +50,7 @@
         "timeout":  300000,
         "val_steps": 32,
         "speed_steps": 32,
+        "hue_steps": 16,
         "animations": {
             "breathing": true,
             "cycle_all": true,

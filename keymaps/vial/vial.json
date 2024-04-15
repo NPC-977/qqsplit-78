@@ -4,15 +4,6 @@
     {"name": "RGB",
      "title": "自定义rgb开关不影响指示灯",
      "shortName": "RGB_STATE"
-    },
-    
-    {"name": "In-HSV",
-    "title": "增加Fn指示灯色调",
-    "shortName": "HSV_I"
-    },
-    {"name": "De-HSV",
-    "title": "降低Fn指示灯色调",
-    "shortName": "HSV_D"
     }
   ],
   "matrix": {

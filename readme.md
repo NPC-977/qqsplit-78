@@ -1,10 +1,27 @@
 # qqsplit_78
 
+![qqsplit_78](imgur.com image replace me!)
+
 *A short description of the keyboard/project*
 
 * Keyboard Maintainer: [qqsplit_78](https://github.com/NPC-977)
+* Hardware Supported: *The PCBs, controllers supported*
+* Hardware Availability: *Links to where you can find this hardware*
 
-* 支持vial动态改键，fn层、大写指示灯。
-* fn层指示灯支持修改颜色(默认为fn层的左fn、fn层的右fn，支持在vial内修改)。
-* 自定义的rgb关闭键(关闭后不影响大写指示灯，支持在vial内修改)
-![5300e5b54b66c7112b1cc8d0eb48d8ee](https://github.com/NPC-977/qqsplit-78/assets/113503902/ade7bd6f-29ca-4ebb-a4d9-9707f05fa42b)
+Make example for this keyboard (after setting up your build environment):
+
+    make qqsplit_78:default
+
+Flashing example for this keyboard:
+
+    make qqsplit_78:default:flash
+
+See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
+
+## Bootloader
+
+Enter the bootloader in 3 ways:
+
+* **Bootmagic reset**: Hold down the key at (0,0) in the matrix (usually the top left key or Escape) and plug in the keyboard
+* **Physical reset button**: Briefly press the button on the back of the PCB - some may have pads you must short instead
+* **Keycode in layout**: Press the key mapped to `QK_BOOT` if it is available
