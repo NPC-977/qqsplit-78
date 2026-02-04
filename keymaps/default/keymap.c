@@ -3,28 +3,47 @@
 
 //ENCODER
 #include QMK_KEYBOARD_H
-#if defined(ENCODER_MAP_ENABLE)
-const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [1] = { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  }
-};
-#endif
 
+// #if defined(ENCODER_MAP_ENABLE)
+// const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+//     [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+//     [1] = { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  }
+// };
+// #endif
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) { // 自定义指示灯
+    if (host_keyboard_led_state().caps_lock) { // 大写指示灯
+        rgb_matrix_set_color(19, 255, 0, 0);
+    }
+
+    if (get_highest_layer(layer_state) == 1) { // fn层指示灯
+        HSV hsv = rgb_matrix_get_hsv();
+        hsv.v = !rgb_matrix_get_val() ? 32 : rgb_matrix_get_val();
+        hsv.h = (hsv.h+128)%256;
+        RGB rgb                            = hsv_to_rgb(hsv);
+        for (uint8_t i = led_min; i < led_max; i++) {
+            if (HAS_FLAGS(g_led_config.flags[i], 0x08)) {
+                rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+            }
+        }
+    }
+    return false;
+}
 //KEYMAP
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_ESC,KC_GRV,KC_1,KC_2,KC_3,KC_4,KC_5,KC_6,KC_7,KC_8,KC_9,KC_0,KC_MINS,KC_EQL,KC_BSPC,KC_F9,
+        KC_ESC,KC_GRV,KC_1,KC_2,KC_3,KC_4,KC_5,KC_6,KC_7,KC_8,KC_9,KC_0,KC_MINS,KC_EQL,KC_BSPC,KC_DEL,
         KC_F1,KC_TAB,KC_Q,KC_W,KC_E,KC_R,KC_T,KC_Y,KC_U,KC_I,KC_O,KC_P,KC_LBRC,KC_RBRC,KC_BSLS,KC_F10,
-        KC_F2,KC_CAPS,KC_A,KC_S,KC_D,KC_F,KC_G,KC_H,KC_J,KC_K,KC_L,KC_SCLN,KC_QUOT,KC_ENT,KC_F11,
-        KC_F3,KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,KC_B,KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,KC_RSFT,KC_UP,KC_F12,
-        KC_F4,KC_LCTL,MO(1),KC_LWIN,KC_LALT,KC_SPC,KC_SPC,KC_SPC,KC_SPC,KC_RALT,MO(1),KC_RCTL,KC_LEFT,KC_DOWN,KC_RGHT
+        KC_F5,KC_CAPS,KC_A,KC_S,KC_D,KC_F,KC_G,KC_H,KC_J,KC_K,KC_L,KC_SCLN,KC_QUOT,KC_ENT,KC_F11,
+        KC_COPY,KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,KC_B,KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,KC_RSFT,KC_UP,KC_F12,
+        KC_PASTE,KC_LCTL,KC_LWIN,KC_LALT,MO(1),KC_SPC,KC_SPC,KC_SPC,KC_SPC,KC_RALT,MO(1),KC_RCTL,KC_LEFT,KC_DOWN,KC_RGHT
     ),
     [1] = LAYOUT(
-        KC_ESC,KC_GRV,KC_1,KC_2,KC_3,KC_4,KC_5,KC_6,KC_7,KC_8,KC_9,KC_0,KC_MINS,KC_EQL,KC_BSPC,KC_F9,
-        KC_F1,KC_TAB,KC_Q,KC_W,KC_E,KC_R,KC_T,KC_Y,KC_U,KC_I,KC_O,KC_P,KC_LBRC,KC_RBRC,KC_BSLS,KC_F10,
-        KC_F2,KC_CAPS,KC_A,KC_S,KC_D,KC_F,KC_G,KC_H,KC_J,KC_K,KC_L,KC_SCLN,KC_QUOT,KC_ENT,KC_F11,
-        KC_F3,KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,KC_B,KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,KC_RSFT,KC_UP,KC_F12,
-        KC_F4,KC_LCTL,KC_NO,KC_LWIN,KC_LALT,KC_SPC,KC_SPC,KC_SPC,KC_SPC,KC_RALT,KC_NO,KC_RCTL,KC_LEFT,KC_DOWN,KC_RGHT
+        KC_ESC,KC_GRV,KC_F1,KC_F2,KC_F3,KC_F4,KC_F5,KC_F6,KC_F7,KC_F8,KC_F9,KC_F10,KC_F11,KC_F12,KC_DEL,KC_DEL,
+        KC_F1,KC_TAB,KC_Q,KC_W,KC_E,KC_R,KC_T,KC_Y,KC_U,KC_I,KC_O,KC_P,KC_LBRC,KC_RBRC,KC_BSLS,QK_RGB_MATRIX_MODE_NEXT,
+        KC_F2,KC_CAPS,KC_A,KC_S,KC_D,KC_F,KC_G,KC_H,KC_J,KC_K,KC_L,KC_SCLN,KC_QUOT,KC_ENT,QK_RGB_MATRIX_TOGGLE,
+        KC_F3,KC_LSFT,KC_Z,KC_X,KC_C,KC_V,KC_B,KC_B,KC_N,KC_M,KC_COMM,KC_DOT,KC_SLSH,KC_RSFT,QK_RGB_MATRIX_VALUE_UP,QK_RGB_MATRIX_MODE_PREVIOUS,
+        KC_F4,KC_LCTL,KC_NO,KC_LWIN,KC_LALT,KC_SPC,KC_SPC,KC_SPC,KC_SPC,KC_RALT,KC_NO,KC_RCTL,QK_RGB_MATRIX_SPEED_DOWN,QK_RGB_MATRIX_VALUE_DOWN,QK_RGB_MATRIX_SPEED_UP
     )
 };
 /*
